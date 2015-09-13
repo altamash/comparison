@@ -45,8 +45,6 @@ import defaultroot.defautmodel.domain.defautmodel.Price;
 import defaultroot.defautmodel.domain.defautmodel.Rating;
 import defaultroot.defautmodel.domain.defautmodel.Rating;
 import defaultroot.defautmodel.domain.defautmodel.Rating;
-import defaultroot.defautmodel.domain.defautmodel.ScriptStatus;
-import defaultroot.defautmodel.domain.defautmodel.ScriptType;
 import defaultroot.defautmodel.domain.defautmodel.User;
 import defaultroot.defautmodel.domain.defautmodel.Translation;
 import defaultroot.defautmodel.domain.defautmodel.Competence;
@@ -62,9 +60,23 @@ import defaultroot.defautmodel.domain.defautmodel.Competence;
 @Table (name="\"script\"")
 @NamedQueries ({
 	 @NamedQuery(name="Script.findAll", query="SELECT script FROM Script script")
+	,@NamedQuery(name="Script.findByScriptType", query="SELECT script FROM Script script WHERE script.scriptType = :scriptType")
+	,@NamedQuery(name="Script.findByScriptTypeContaining", query="SELECT script FROM Script script WHERE script.scriptType like :scriptType")
+
+	,@NamedQuery(name="Script.findByScriptStatus", query="SELECT script FROM Script script WHERE script.scriptStatus = :scriptStatus")
+	,@NamedQuery(name="Script.findByScriptStatusContaining", query="SELECT script FROM Script script WHERE script.scriptStatus like :scriptStatus")
+
 	,@NamedQuery(name="Script.findByPriority", query="SELECT script FROM Script script WHERE script.priority = :priority")
 
 	,@NamedQuery(name="Script.findByDeadline", query="SELECT script FROM Script script WHERE script.deadline = :deadline")
+
+	,@NamedQuery(name="Script.findByLengthWordsRequest", query="SELECT script FROM Script script WHERE script.lengthWordsRequest = :lengthWordsRequest")
+
+	,@NamedQuery(name="Script.findByLengthMinutesRequest", query="SELECT script FROM Script script WHERE script.lengthMinutesRequest = :lengthMinutesRequest")
+
+	,@NamedQuery(name="Script.findByLengthWordsResult", query="SELECT script FROM Script script WHERE script.lengthWordsResult = :lengthWordsResult")
+
+	,@NamedQuery(name="Script.findByLengthMinutesResult", query="SELECT script FROM Script script WHERE script.lengthMinutesResult = :lengthMinutesResult")
 
 	,@NamedQuery(name="Script.findByScriptRequest", query="SELECT script FROM Script script WHERE script.scriptRequest = :scriptRequest")
 	,@NamedQuery(name="Script.findByScriptRequestContaining", query="SELECT script FROM Script script WHERE script.scriptRequest like :scriptRequest")
@@ -78,8 +90,16 @@ public class Script implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String FIND_ALL = "Script.findAll";
+    public static final String FIND_BY_SCRIPTTYPE = "Script.findByScriptType";
+    public static final String FIND_BY_SCRIPTTYPE_CONTAINING ="Script.findByScriptTypeContaining";
+    public static final String FIND_BY_SCRIPTSTATUS = "Script.findByScriptStatus";
+    public static final String FIND_BY_SCRIPTSTATUS_CONTAINING ="Script.findByScriptStatusContaining";
     public static final String FIND_BY_PRIORITY = "Script.findByPriority";
     public static final String FIND_BY_DEADLINE = "Script.findByDeadline";
+    public static final String FIND_BY_LENGTHWORDSREQUEST = "Script.findByLengthWordsRequest";
+    public static final String FIND_BY_LENGTHMINUTESREQUEST = "Script.findByLengthMinutesRequest";
+    public static final String FIND_BY_LENGTHWORDSRESULT = "Script.findByLengthWordsResult";
+    public static final String FIND_BY_LENGTHMINUTESRESULT = "Script.findByLengthMinutesResult";
     public static final String FIND_BY_SCRIPTREQUEST = "Script.findByScriptRequest";
     public static final String FIND_BY_SCRIPTREQUEST_CONTAINING ="Script.findByScriptRequestContaining";
     public static final String FIND_BY_SCRIPTRESULT = "Script.findByScriptResult";
@@ -88,6 +108,20 @@ public class Script implements Serializable {
     @Id @Column(name="script_id" ) 
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer scriptId;
+
+//MP-MANAGED-ADDED-AREA-BEGINNING @script_type-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @script_type-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-script_type@
+    @Column(name="script_type"  , length=10 , nullable=false , unique=false)
+    private String scriptType; 
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-ADDED-AREA-BEGINNING @script_status-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @script_status-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-script_status@
+    @Column(name="script_status"  , length=30 , nullable=false , unique=false)
+    private String scriptStatus; 
+//MP-MANAGED-UPDATABLE-ENDING
 
 //MP-MANAGED-ADDED-AREA-BEGINNING @priority-field-annotation@
 //MP-MANAGED-ADDED-AREA-ENDING @priority-field-annotation@
@@ -101,6 +135,34 @@ public class Script implements Serializable {
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-deadline@
     @Column(name="deadline"   , nullable=true , unique=false)
     private Timestamp deadline; 
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-ADDED-AREA-BEGINNING @length_words_request-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @length_words_request-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-length_words_request@
+    @Column(name="length_words_request"   , nullable=true , unique=false)
+    private Integer lengthWordsRequest; 
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-ADDED-AREA-BEGINNING @length_minutes_request-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @length_minutes_request-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-length_minutes_request@
+    @Column(name="length_minutes_request"   , nullable=true , unique=false)
+    private Integer lengthMinutesRequest; 
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-ADDED-AREA-BEGINNING @length_words_result-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @length_words_result-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-length_words_result@
+    @Column(name="length_words_result"   , nullable=true , unique=false)
+    private Integer lengthWordsResult; 
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-ADDED-AREA-BEGINNING @length_minutes_result-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @length_minutes_result-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-length_minutes_result@
+    @Column(name="length_minutes_result"   , nullable=true , unique=false)
+    private Integer lengthMinutesResult; 
 //MP-MANAGED-UPDATABLE-ENDING
 
 //MP-MANAGED-ADDED-AREA-BEGINNING @script_request-field-annotation@
@@ -161,20 +223,6 @@ public class Script implements Serializable {
     @Column(name="rating_id_scriptor"  , nullable=false , unique=true, insertable=false, updatable=false)
     private Integer ratingIdScriptor_;
 
-    @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="script_status_id", referencedColumnName = "script_status_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
-    private ScriptStatus scriptStatusId;  
-
-    @Column(name="script_status_id"  , nullable=false , unique=true, insertable=false, updatable=false)
-    private Integer scriptStatusId_;
-
-    @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="script_type_id", referencedColumnName = "script_type_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
-    private ScriptType scriptTypeId;  
-
-    @Column(name="script_type_id"  , nullable=false , unique=true, insertable=false, updatable=false)
-    private Integer scriptTypeId_;
-
     @ManyToOne (fetch=FetchType.LAZY )
     @JoinColumn(name="scriptor_id", referencedColumnName = "user_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
     private User scriptorId;  
@@ -217,10 +265,14 @@ public class Script implements Serializable {
        Integer ratingIdScriptor,
        Integer ratingIdClient,
        Integer priceId,
-       Integer scriptTypeId,
-       Integer scriptStatusId,
+       String scriptType,
+       String scriptStatus,
        Boolean priority,
        Timestamp deadline,
+       Integer lengthWordsRequest,
+       Integer lengthMinutesRequest,
+       Integer lengthWordsResult,
+       Integer lengthMinutesResult,
        String scriptRequest,
        String scriptResult) {
 	 this(
@@ -233,10 +285,14 @@ public class Script implements Serializable {
        ratingIdScriptor,
        ratingIdClient,
        priceId,
-       scriptTypeId,
-       scriptStatusId,
+       scriptType,
+       scriptStatus,
        priority,
        deadline,
+       lengthWordsRequest,
+       lengthMinutesRequest,
+       lengthWordsResult,
+       lengthMinutesResult,
        scriptRequest,
        scriptResult
 	 ,true);
@@ -252,18 +308,28 @@ public class Script implements Serializable {
        Integer ratingIdScriptor,
        Integer ratingIdClient,
        Integer priceId,
-       Integer scriptTypeId,
-       Integer scriptStatusId,
+       String scriptType,
+       String scriptStatus,
        Boolean priority,
        Timestamp deadline,
+       Integer lengthWordsRequest,
+       Integer lengthMinutesRequest,
+       Integer lengthWordsResult,
+       Integer lengthMinutesResult,
        String scriptRequest,
        String scriptResult	
     , boolean setRelationship) {
        //primary keys
        setScriptId (scriptId);
        //attributes
+       setScriptType (scriptType);
+       setScriptStatus (scriptStatus);
        setPriority (priority);
        setDeadline (deadline);
+       setLengthWordsRequest (lengthWordsRequest);
+       setLengthMinutesRequest (lengthMinutesRequest);
+       setLengthWordsResult (lengthWordsResult);
+       setLengthMinutesResult (lengthMinutesResult);
        setScriptRequest (scriptRequest);
        setScriptResult (scriptResult);
        //parents
@@ -285,12 +351,6 @@ public class Script implements Serializable {
        if (setRelationship) this.ratingIdScriptor = new Rating();
        if (setRelationship) this.ratingIdScriptor.setRatingId(ratingIdScriptor); 
 	   setRatingIdScriptor_ (ratingIdScriptor);
-       if (setRelationship) this.scriptStatusId = new ScriptStatus();
-       if (setRelationship) this.scriptStatusId.setScriptStatusId(scriptStatusId); 
-	   setScriptStatusId_ (scriptStatusId);
-       if (setRelationship) this.scriptTypeId = new ScriptType();
-       if (setRelationship) this.scriptTypeId.setScriptTypeId(scriptTypeId); 
-	   setScriptTypeId_ (scriptTypeId);
        if (setRelationship) this.scriptorId = new User();
        if (setRelationship) this.scriptorId.setUserId(scriptorId); 
 	   setScriptorId_ (scriptorId);
@@ -310,10 +370,14 @@ public class Script implements Serializable {
           getRatingIdScriptor_(),
           getRatingIdClient_(),
           getPriceId_(),
-          getScriptTypeId_(),
-          getScriptStatusId_(),
+          getScriptType(),
+          getScriptStatus(),
           getPriority(),
           getDeadline(),
+          getLengthWordsRequest(),
+          getLengthMinutesRequest(),
+          getLengthWordsResult(),
+          getLengthMinutesResult(),
           getScriptRequest(),
           getScriptResult()
        , false
@@ -328,6 +392,28 @@ public class Script implements Serializable {
         this.scriptId =  scriptId;
     }
     
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-script_type@
+    public String getScriptType() {
+        return scriptType;
+    }
+	
+    public void setScriptType (String scriptType) {
+        this.scriptType =  scriptType;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-script_status@
+    public String getScriptStatus() {
+        return scriptStatus;
+    }
+	
+    public void setScriptStatus (String scriptStatus) {
+        this.scriptStatus =  scriptStatus;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-priority@
     public Boolean getPriority() {
         return priority;
@@ -346,6 +432,50 @@ public class Script implements Serializable {
 	
     public void setDeadline (Timestamp deadline) {
         this.deadline =  deadline;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-length_words_request@
+    public Integer getLengthWordsRequest() {
+        return lengthWordsRequest;
+    }
+	
+    public void setLengthWordsRequest (Integer lengthWordsRequest) {
+        this.lengthWordsRequest =  lengthWordsRequest;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-length_minutes_request@
+    public Integer getLengthMinutesRequest() {
+        return lengthMinutesRequest;
+    }
+	
+    public void setLengthMinutesRequest (Integer lengthMinutesRequest) {
+        this.lengthMinutesRequest =  lengthMinutesRequest;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-length_words_result@
+    public Integer getLengthWordsResult() {
+        return lengthWordsResult;
+    }
+	
+    public void setLengthWordsResult (Integer lengthWordsResult) {
+        this.lengthWordsResult =  lengthWordsResult;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-length_minutes_result@
+    public Integer getLengthMinutesResult() {
+        return lengthMinutesResult;
+    }
+	
+    public void setLengthMinutesResult (Integer lengthMinutesResult) {
+        this.lengthMinutesResult =  lengthMinutesResult;
     }
 	
 //MP-MANAGED-UPDATABLE-ENDING
@@ -467,38 +597,6 @@ public class Script implements Serializable {
 	
     public void setRatingIdScriptor_ (Integer ratingIdScriptor) {
         this.ratingIdScriptor_ =  ratingIdScriptor;
-    }
-	
-    public ScriptStatus getScriptStatusId () {
-    	return scriptStatusId;
-    }
-	
-    public void setScriptStatusId (ScriptStatus scriptStatusId) {
-    	this.scriptStatusId = scriptStatusId;
-    }
-
-    public Integer getScriptStatusId_() {
-        return scriptStatusId_;
-    }
-	
-    public void setScriptStatusId_ (Integer scriptStatusId) {
-        this.scriptStatusId_ =  scriptStatusId;
-    }
-	
-    public ScriptType getScriptTypeId () {
-    	return scriptTypeId;
-    }
-	
-    public void setScriptTypeId (ScriptType scriptTypeId) {
-    	this.scriptTypeId = scriptTypeId;
-    }
-
-    public Integer getScriptTypeId_() {
-        return scriptTypeId_;
-    }
-	
-    public void setScriptTypeId_ (Integer scriptTypeId) {
-        this.scriptTypeId_ =  scriptTypeId;
     }
 	
     public User getScriptorId () {

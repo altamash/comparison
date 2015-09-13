@@ -42,7 +42,6 @@ import javax.persistence.*;
 import defaultroot.defautmodel.domain.defautmodel.Script;
 import defaultroot.defautmodel.domain.defautmodel.Language;
 import defaultroot.defautmodel.domain.defautmodel.Rating;
-import defaultroot.defautmodel.domain.defautmodel.ScriptType;
 import defaultroot.defautmodel.domain.defautmodel.Translation;
 
 /**
@@ -63,6 +62,9 @@ import defaultroot.defautmodel.domain.defautmodel.Translation;
 
 	,@NamedQuery(name="Price.findByCost", query="SELECT price FROM Price price WHERE price.cost = :cost")
 
+	,@NamedQuery(name="Price.findByScriptType", query="SELECT price FROM Price price WHERE price.scriptType = :scriptType")
+	,@NamedQuery(name="Price.findByScriptTypeContaining", query="SELECT price FROM Price price WHERE price.scriptType like :scriptType")
+
 })
 
 public class Price implements Serializable {
@@ -73,6 +75,8 @@ public class Price implements Serializable {
     public static final String FIND_BY_CURRENCY_CONTAINING ="Price.findByCurrencyContaining";
     public static final String FIND_BY_PRICE = "Price.findByPrice";
     public static final String FIND_BY_COST = "Price.findByCost";
+    public static final String FIND_BY_SCRIPTTYPE = "Price.findByScriptType";
+    public static final String FIND_BY_SCRIPTTYPE_CONTAINING ="Price.findByScriptTypeContaining";
 	
     @Id @Column(name="price_id" ) 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -99,6 +103,13 @@ public class Price implements Serializable {
     private Long cost; 
 //MP-MANAGED-UPDATABLE-ENDING
 
+//MP-MANAGED-ADDED-AREA-BEGINNING @script_type-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @script_type-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-script_type@
+    @Column(name="script_type"  , length=10 , nullable=false , unique=false)
+    private String scriptType; 
+//MP-MANAGED-UPDATABLE-ENDING
+
     @ManyToOne (fetch=FetchType.LAZY )
     @JoinColumn(name="iso6392t", referencedColumnName = "iso6392t" , nullable=true , unique=false , insertable=true, updatable=true) 
     private Language iso6392t;  
@@ -112,13 +123,6 @@ public class Price implements Serializable {
 
     @Column(name="rating_id"  , nullable=false , unique=true, insertable=false, updatable=false)
     private Integer ratingId_;
-
-    @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="script_type_id", referencedColumnName = "script_type_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
-    private ScriptType scriptTypeId;  
-
-    @Column(name="script_type_id"  , nullable=false , unique=true, insertable=false, updatable=false)
-    private Integer scriptTypeId_;
 
     @ManyToOne (fetch=FetchType.LAZY )
     @JoinColumn(name="translation_id", referencedColumnName = "translation_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
@@ -149,7 +153,7 @@ public class Price implements Serializable {
        String iso6392t,
        Integer translationId,
        Integer ratingId,
-       Integer scriptTypeId) {
+       String scriptType) {
 	 this(
        priceId,
        currency,
@@ -158,7 +162,7 @@ public class Price implements Serializable {
        iso6392t,
        translationId,
        ratingId,
-       scriptTypeId
+       scriptType
 	 ,true);
 	}
     
@@ -170,7 +174,7 @@ public class Price implements Serializable {
        String iso6392t,
        Integer translationId,
        Integer ratingId,
-       Integer scriptTypeId	
+       String scriptType	
     , boolean setRelationship) {
        //primary keys
        setPriceId (priceId);
@@ -178,6 +182,7 @@ public class Price implements Serializable {
        setCurrency (currency);
        setPrice (price);
        setCost (cost);
+       setScriptType (scriptType);
        //parents
        if (setRelationship) this.iso6392t = new Language();
        if (setRelationship) this.iso6392t.setIso6392t(iso6392t); 
@@ -185,9 +190,6 @@ public class Price implements Serializable {
        if (setRelationship) this.ratingId = new Rating();
        if (setRelationship) this.ratingId.setRatingId(ratingId); 
 	   setRatingId_ (ratingId);
-       if (setRelationship) this.scriptTypeId = new ScriptType();
-       if (setRelationship) this.scriptTypeId.setScriptTypeId(scriptTypeId); 
-	   setScriptTypeId_ (scriptTypeId);
        if (setRelationship) this.translationId = new Translation();
        if (setRelationship) this.translationId.setTranslationId(translationId); 
 	   setTranslationId_ (translationId);
@@ -202,7 +204,7 @@ public class Price implements Serializable {
           getIso6392t_(),
           getTranslationId_(),
           getRatingId_(),
-          getScriptTypeId_()
+          getScriptType()
        , false
 	   );
 	}
@@ -248,6 +250,17 @@ public class Price implements Serializable {
 	
 //MP-MANAGED-UPDATABLE-ENDING
 
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-script_type@
+    public String getScriptType() {
+        return scriptType;
+    }
+	
+    public void setScriptType (String scriptType) {
+        this.scriptType =  scriptType;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
 
     public Language getIso6392t () {
     	return iso6392t;
@@ -279,22 +292,6 @@ public class Price implements Serializable {
 	
     public void setRatingId_ (Integer ratingId) {
         this.ratingId_ =  ratingId;
-    }
-	
-    public ScriptType getScriptTypeId () {
-    	return scriptTypeId;
-    }
-	
-    public void setScriptTypeId (ScriptType scriptTypeId) {
-    	this.scriptTypeId = scriptTypeId;
-    }
-
-    public Integer getScriptTypeId_() {
-        return scriptTypeId_;
-    }
-	
-    public void setScriptTypeId_ (Integer scriptTypeId) {
-        this.scriptTypeId_ =  scriptTypeId;
     }
 	
     public Translation getTranslationId () {
