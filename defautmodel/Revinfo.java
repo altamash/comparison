@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:43 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -40,7 +39,6 @@ import java.util.HashSet;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import defaultroot.defautmodel.domain.defautmodel.User;
 
 /**
  *
@@ -71,15 +69,8 @@ public class Revinfo implements Serializable {
 //MP-MANAGED-ADDED-AREA-ENDING @created_at-field-annotation@
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-created_at@
     @Column(name="created_at"   , nullable=false , unique=true)
-    private Timestamp createdAt; 
+    private Long createdAt; 
 //MP-MANAGED-UPDATABLE-ENDING
-
-    @ManyToOne (fetch=FetchType.LAZY )
-    @JoinColumn(name="user_id", referencedColumnName = "user_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
-    private User userId;  
-
-    @Column(name="user_id"  , nullable=true , unique=true, insertable=false, updatable=false)
-    private Integer userId_;
 
     /**
     * Default constructor
@@ -92,34 +83,27 @@ public class Revinfo implements Serializable {
 	*/
     public Revinfo(
        Integer revinfoId,
-       Integer userId,
-       Timestamp createdAt) {
+       Long createdAt) {
 	 this(
        revinfoId,
-       userId,
        createdAt
 	 ,true);
 	}
     
 	public Revinfo(
        Integer revinfoId,
-       Integer userId,
-       Timestamp createdAt	
+       Long createdAt	
     , boolean setRelationship) {
        //primary keys
        setRevinfoId (revinfoId);
        //attributes
        setCreatedAt (createdAt);
        //parents
-       if (setRelationship) this.userId = new User();
-       if (setRelationship) this.userId.setUserId(userId); 
-	   setUserId_ (userId);
     }
 
 	public Revinfo flat() {
 	   return new Revinfo(
           getRevinfoId(),
-          getUserId_(),
           getCreatedAt()
        , false
 	   );
@@ -134,46 +118,20 @@ public class Revinfo implements Serializable {
     }
     
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-created_at@
-    public Timestamp getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 	
-    public void setCreatedAt (Timestamp createdAt) {
+    public void setCreatedAt (Long createdAt) {
         this.createdAt =  createdAt;
     }
 	
 //MP-MANAGED-UPDATABLE-ENDING
 
 
-    public User getUserId () {
-    	return userId;
-    }
-	
-    public void setUserId (User userId) {
-    	this.userId = userId;
-    }
-
-    public Integer getUserId_() {
-        return userId_;
-    }
-	
-    public void setUserId_ (Integer userId) {
-        this.userId_ =  userId;
-    }
-	
 
 
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @prepersist-revinfo@
-    @javax.persistence.PrePersist
-    public void prePersist_ () {
-    }
-//MP-MANAGED-UPDATABLE-ENDING
 
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @preupdate-revinfo@
-    @javax.persistence.PreUpdate
-    public void preUpdate_ () {
-    }
-//MP-MANAGED-UPDATABLE-ENDING
 
 //MP-MANAGED-ADDED-AREA-BEGINNING @implementation@
 //MP-MANAGED-ADDED-AREA-ENDING @implementation@

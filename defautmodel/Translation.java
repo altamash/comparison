@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:43 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -57,19 +56,30 @@ import defaultroot.defautmodel.domain.defautmodel.Language;
 @Table (name="\"translation\"")
 @NamedQueries ({
 	 @NamedQuery(name="Translation.findAll", query="SELECT translation FROM Translation translation")
+	,@NamedQuery(name="Translation.findByAmountSkill", query="SELECT translation FROM Translation translation WHERE translation.amountSkill = :amountSkill")
+
 	,@NamedQuery(name="Translation.findByIsActive", query="SELECT translation FROM Translation translation WHERE translation.isActive = :isActive")
 
 })
 
 public class Translation implements Serializable {
     private static final long serialVersionUID = 1L;
+	public static final Integer __DEFAULT_AMOUNT_SKILL = Integer.valueOf(0);
 
     public static final String FIND_ALL = "Translation.findAll";
+    public static final String FIND_BY_AMOUNTSKILL = "Translation.findByAmountSkill";
     public static final String FIND_BY_ISACTIVE = "Translation.findByIsActive";
 	
     @Id @Column(name="translation_id" ) 
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer translationId;
+
+//MP-MANAGED-ADDED-AREA-BEGINNING @amount_skill-field-annotation@
+//MP-MANAGED-ADDED-AREA-ENDING @amount_skill-field-annotation@
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-amount_skill@
+    @Column(name="amount_skill"   , nullable=false , unique=false)
+    private Integer amountSkill; 
+//MP-MANAGED-UPDATABLE-ENDING
 
 //MP-MANAGED-ADDED-AREA-BEGINNING @is_active-field-annotation@
 //MP-MANAGED-ADDED-AREA-ENDING @is_active-field-annotation@
@@ -120,11 +130,13 @@ public class Translation implements Serializable {
        Integer translationId,
        String iso6392tFrom,
        String iso6392tTo,
+       Integer amountSkill,
        Boolean isActive) {
 	 this(
        translationId,
        iso6392tFrom,
        iso6392tTo,
+       amountSkill,
        isActive
 	 ,true);
 	}
@@ -133,11 +145,13 @@ public class Translation implements Serializable {
        Integer translationId,
        String iso6392tFrom,
        String iso6392tTo,
+       Integer amountSkill,
        Boolean isActive	
     , boolean setRelationship) {
        //primary keys
        setTranslationId (translationId);
        //attributes
+       setAmountSkill (amountSkill);
        setIsActive (isActive);
        //parents
        if (setRelationship) this.iso6392tFrom = new Language();
@@ -153,6 +167,7 @@ public class Translation implements Serializable {
           getTranslationId(),
           getIso6392tFrom_(),
           getIso6392tTo_(),
+          getAmountSkill(),
           getIsActive()
        , false
 	   );
@@ -166,6 +181,17 @@ public class Translation implements Serializable {
         this.translationId =  translationId;
     }
     
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-amount_skill@
+    public Integer getAmountSkill() {
+        return amountSkill;
+    }
+	
+    public void setAmountSkill (Integer amountSkill) {
+        this.amountSkill =  amountSkill;
+    }
+	
+//MP-MANAGED-UPDATABLE-ENDING
+
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @GETTER-SETTER-is_active@
     public Boolean getIsActive() {
         return isActive;
@@ -266,12 +292,14 @@ public class Translation implements Serializable {
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @prepersist-translation@
     @javax.persistence.PrePersist
     public void prePersist_ () {
+        if (amountSkill==null) amountSkill=__DEFAULT_AMOUNT_SKILL;
     }
 //MP-MANAGED-UPDATABLE-ENDING
 
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @preupdate-translation@
     @javax.persistence.PreUpdate
     public void preUpdate_ () {
+        if (amountSkill==null) amountSkill=__DEFAULT_AMOUNT_SKILL;
     }
 //MP-MANAGED-UPDATABLE-ENDING
 

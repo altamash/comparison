@@ -40,35 +40,46 @@ import javax.persistence.*;
 
 /**
  *
- * <p>Title: LanguageTranslateId</p>
+ * <p>Title: UserconnectionId</p>
  *
- * <p>Description: Embedded Id describing a LanguageTranslateId entity primary key</p>
+ * <p>Description: Embedded Id describing a UserconnectionId entity primary key</p>
  *
  */
 @Embeddable
-public class LanguageTranslateId implements Serializable {
+public class UserconnectionId implements Serializable {
 
 
-    @Column(name="iso6392t" ,length=3 ,nullable=false)
-    private String iso6392t;
+    @Column(name="userId" ,length=255 ,nullable=false)
+    private String userid;
 
-    @Column(name="for_iso6392t" ,length=3 ,nullable=false)
-    private String forIso6392t;
+    @Column(name="providerId" ,length=255 ,nullable=false)
+    private String providerid;
 
-	public String getIso6392t() {
-        return iso6392t;
+    @Column(name="providerUserId" ,length=255 ,nullable=false)
+    private String provideruserid;
+
+	public String getUserid() {
+        return userid;
     }
 	
-    public void setIso6392t (String iso6392t) {
-        this.iso6392t = iso6392t;
+    public void setUserid (String userid) {
+        this.userid = userid;
     }
 
-	public String getForIso6392t() {
-        return forIso6392t;
+	public String getProviderid() {
+        return providerid;
     }
 	
-    public void setForIso6392t (String forIso6392t) {
-        this.forIso6392t = forIso6392t;
+    public void setProviderid (String providerid) {
+        this.providerid = providerid;
+    }
+
+	public String getProvideruserid() {
+        return provideruserid;
+    }
+	
+    public void setProvideruserid (String provideruserid) {
+        this.provideruserid = provideruserid;
     }
 
     @Override
@@ -84,8 +95,10 @@ public class LanguageTranslateId implements Serializable {
  
     @Override
     public String toString() {
-        return "LanguageTranslateId:" 
-        + ":" + forIso6392t
+        return "UserconnectionId:" 
+        + ":" + userid
+        + ":" + providerid
+        + ":" + provideruserid
         ;
     }
     

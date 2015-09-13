@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:42 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -40,8 +39,8 @@ import java.util.HashSet;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import defaultroot.defautmodel.domain.defautmodel.User;
 import defaultroot.defautmodel.domain.defautmodel.Language;
+import defaultroot.defautmodel.domain.defautmodel.User;
 import defaultroot.defautmodel.domain.defautmodel.LanguageSkillId;
 
 /**
@@ -106,21 +105,21 @@ public class LanguageSkill implements Serializable {
     private Boolean isSupervisor; 
 //MP-MANAGED-UPDATABLE-ENDING
 
-    @MapsId ("user_id")
-    @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="user_id", referencedColumnName = "user_id" , nullable=false , unique=false , insertable=true, updatable=true) 
-    private User userId;  
-
-    @Column(name="user_id"  , nullable=false , unique=true, insertable=false, updatable=false)
-    private Integer userId_;
-
     @MapsId ("iso6392t")
     @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="iso6392t", referencedColumnName = "iso6392t" , nullable=false , unique=true  , insertable=true, updatable=true) 
+    @JoinColumn(name="iso6392t", referencedColumnName = "iso6392t" , nullable=false , unique=false , insertable=true, updatable=true) 
     private Language iso6392t;  
 
     @Column(name="iso6392t" , length=3 , nullable=false , unique=true, insertable=false, updatable=false)
     private String iso6392t_;
+
+    @MapsId ("user_id")
+    @ManyToOne (fetch=FetchType.LAZY , optional=false)
+    @JoinColumn(name="user_id", referencedColumnName = "user_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
+    private User userId;  
+
+    @Column(name="user_id"  , nullable=false , unique=true, insertable=false, updatable=false)
+    private Integer userId_;
 
     /**
     * Default constructor
@@ -164,12 +163,12 @@ public class LanguageSkill implements Serializable {
        setScriptAmount (scriptAmount);
        setIsSupervisor (isSupervisor);
        //parents
-       if (setRelationship) this.userId = new User();
-       if (setRelationship) this.userId.setUserId(userId); 
-	   setUserId_ (userId);
        if (setRelationship) this.iso6392t = new Language();
        if (setRelationship) this.iso6392t.setIso6392t(iso6392t); 
 	   setIso6392t_ (iso6392t);
+       if (setRelationship) this.userId = new User();
+       if (setRelationship) this.userId.setUserId(userId); 
+	   setUserId_ (userId);
     }
 
 	public LanguageSkill flat() {
@@ -238,22 +237,6 @@ public class LanguageSkill implements Serializable {
 //MP-MANAGED-UPDATABLE-ENDING
 
 
-    public User getUserId () {
-    	return userId;
-    }
-	
-    public void setUserId (User userId) {
-    	this.userId = userId;
-    }
-
-    public Integer getUserId_() {
-        return userId_;
-    }
-	
-    public void setUserId_ (Integer userId) {
-        this.userId_ =  userId;
-    }
-	
     public Language getIso6392t () {
     	return iso6392t;
     }
@@ -268,6 +251,22 @@ public class LanguageSkill implements Serializable {
 	
     public void setIso6392t_ (String iso6392t) {
         this.iso6392t_ =  iso6392t;
+    }
+	
+    public User getUserId () {
+    	return userId;
+    }
+	
+    public void setUserId (User userId) {
+    	this.userId = userId;
+    }
+
+    public Integer getUserId_() {
+        return userId_;
+    }
+	
+    public void setUserId_ (Integer userId) {
+        this.userId_ =  userId;
     }
 	
 

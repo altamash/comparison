@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:43 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -42,9 +41,9 @@ import java.io.Serializable;
 import javax.persistence.*;
 import defaultroot.defautmodel.domain.defautmodel.Script;
 import defaultroot.defautmodel.domain.defautmodel.Language;
-import defaultroot.defautmodel.domain.defautmodel.Translation;
 import defaultroot.defautmodel.domain.defautmodel.Rating;
 import defaultroot.defautmodel.domain.defautmodel.ScriptType;
+import defaultroot.defautmodel.domain.defautmodel.Translation;
 
 /**
  *
@@ -107,13 +106,6 @@ public class Price implements Serializable {
     @Column(name="iso6392t" , length=3 , nullable=true , unique=true, insertable=false, updatable=false)
     private String iso6392t_;
 
-    @ManyToOne (fetch=FetchType.LAZY )
-    @JoinColumn(name="translation_id", referencedColumnName = "translation_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
-    private Translation translationId;  
-
-    @Column(name="translation_id"  , nullable=true , unique=true, insertable=false, updatable=false)
-    private Integer translationId_;
-
     @ManyToOne (fetch=FetchType.LAZY , optional=false)
     @JoinColumn(name="rating_id", referencedColumnName = "rating_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
     private Rating ratingId;  
@@ -127,6 +119,13 @@ public class Price implements Serializable {
 
     @Column(name="script_type_id"  , nullable=false , unique=true, insertable=false, updatable=false)
     private Integer scriptTypeId_;
+
+    @ManyToOne (fetch=FetchType.LAZY )
+    @JoinColumn(name="translation_id", referencedColumnName = "translation_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
+    private Translation translationId;  
+
+    @Column(name="translation_id"  , nullable=true , unique=true, insertable=false, updatable=false)
+    private Integer translationId_;
 
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptPriceViaPriceId-field-price@
     @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Script.class, fetch=FetchType.LAZY, mappedBy="priceId", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
@@ -183,15 +182,15 @@ public class Price implements Serializable {
        if (setRelationship) this.iso6392t = new Language();
        if (setRelationship) this.iso6392t.setIso6392t(iso6392t); 
 	   setIso6392t_ (iso6392t);
-       if (setRelationship) this.translationId = new Translation();
-       if (setRelationship) this.translationId.setTranslationId(translationId); 
-	   setTranslationId_ (translationId);
        if (setRelationship) this.ratingId = new Rating();
        if (setRelationship) this.ratingId.setRatingId(ratingId); 
 	   setRatingId_ (ratingId);
        if (setRelationship) this.scriptTypeId = new ScriptType();
        if (setRelationship) this.scriptTypeId.setScriptTypeId(scriptTypeId); 
 	   setScriptTypeId_ (scriptTypeId);
+       if (setRelationship) this.translationId = new Translation();
+       if (setRelationship) this.translationId.setTranslationId(translationId); 
+	   setTranslationId_ (translationId);
     }
 
 	public Price flat() {
@@ -266,22 +265,6 @@ public class Price implements Serializable {
         this.iso6392t_ =  iso6392t;
     }
 	
-    public Translation getTranslationId () {
-    	return translationId;
-    }
-	
-    public void setTranslationId (Translation translationId) {
-    	this.translationId = translationId;
-    }
-
-    public Integer getTranslationId_() {
-        return translationId_;
-    }
-	
-    public void setTranslationId_ (Integer translationId) {
-        this.translationId_ =  translationId;
-    }
-	
     public Rating getRatingId () {
     	return ratingId;
     }
@@ -312,6 +295,22 @@ public class Price implements Serializable {
 	
     public void setScriptTypeId_ (Integer scriptTypeId) {
         this.scriptTypeId_ =  scriptTypeId;
+    }
+	
+    public Translation getTranslationId () {
+    	return translationId;
+    }
+	
+    public void setTranslationId (Translation translationId) {
+    	this.translationId = translationId;
+    }
+
+    public Integer getTranslationId_() {
+        return translationId_;
+    }
+	
+    public void setTranslationId_ (Integer translationId) {
+        this.translationId_ =  translationId;
     }
 	
 

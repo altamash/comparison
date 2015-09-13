@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:42 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -40,10 +39,10 @@ import java.util.HashSet;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import defaultroot.defautmodel.domain.defautmodel.MailBatch;
 import defaultroot.defautmodel.domain.defautmodel.MailContent;
 import defaultroot.defautmodel.domain.defautmodel.User;
 import defaultroot.defautmodel.domain.defautmodel.User;
-import defaultroot.defautmodel.domain.defautmodel.MailBatch;
 
 /**
  *
@@ -151,19 +150,19 @@ public class MailAddress implements Serializable {
     private Timestamp onHoldUntil; 
 //MP-MANAGED-UPDATABLE-ENDING
 
+    @ManyToOne (fetch=FetchType.LAZY )
+    @JoinColumn(name="mail_batch_id", referencedColumnName = "mail_batch_id" , nullable=true , unique=false , insertable=true, updatable=true) 
+    private MailBatch mailBatchId;  
+
+    @Column(name="mail_batch_id"  , nullable=true , unique=true, insertable=false, updatable=false)
+    private Integer mailBatchId_;
+
     @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="mail_content_id", referencedColumnName = "mail_content_id" , nullable=false , unique=false , insertable=true, updatable=true) 
+    @JoinColumn(name="mail_content_id", referencedColumnName = "mail_content_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
     private MailContent mailContentId;  
 
     @Column(name="mail_content_id"  , nullable=false , unique=true, insertable=false, updatable=false)
     private Integer mailContentId_;
-
-    @ManyToOne (fetch=FetchType.LAZY )
-    @JoinColumn(name="user_id_sender", referencedColumnName = "user_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
-    private User userIdSender;  
-
-    @Column(name="user_id_sender"  , nullable=true , unique=true, insertable=false, updatable=false)
-    private Integer userIdSender_;
 
     @ManyToOne (fetch=FetchType.LAZY )
     @JoinColumn(name="user_id_recipient", referencedColumnName = "user_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
@@ -173,11 +172,11 @@ public class MailAddress implements Serializable {
     private Integer userIdRecipient_;
 
     @ManyToOne (fetch=FetchType.LAZY )
-    @JoinColumn(name="mail_batch_id", referencedColumnName = "mail_batch_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
-    private MailBatch mailBatchId;  
+    @JoinColumn(name="user_id_sender", referencedColumnName = "user_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
+    private User userIdSender;  
 
-    @Column(name="mail_batch_id"  , nullable=true , unique=true, insertable=false, updatable=false)
-    private Integer mailBatchId_;
+    @Column(name="user_id_sender"  , nullable=true , unique=true, insertable=false, updatable=false)
+    private Integer userIdSender_;
 
     /**
     * Default constructor
@@ -246,18 +245,18 @@ public class MailAddress implements Serializable {
        setSentAt (sentAt);
        setOnHoldUntil (onHoldUntil);
        //parents
-       if (setRelationship) this.mailContentId = new MailContent();
-       if (setRelationship) this.mailContentId.setMailContentId(mailContentId); 
-	   setMailContentId_ (mailContentId);
-       if (setRelationship) this.userIdSender = new User();
-       if (setRelationship) this.userIdSender.setUserId(userIdSender); 
-	   setUserIdSender_ (userIdSender);
-       if (setRelationship) this.userIdRecipient = new User();
-       if (setRelationship) this.userIdRecipient.setUserId(userIdRecipient); 
-	   setUserIdRecipient_ (userIdRecipient);
        if (setRelationship) this.mailBatchId = new MailBatch();
        if (setRelationship) this.mailBatchId.setMailBatchId(mailBatchId); 
 	   setMailBatchId_ (mailBatchId);
+       if (setRelationship) this.mailContentId = new MailContent();
+       if (setRelationship) this.mailContentId.setMailContentId(mailContentId); 
+	   setMailContentId_ (mailContentId);
+       if (setRelationship) this.userIdRecipient = new User();
+       if (setRelationship) this.userIdRecipient.setUserId(userIdRecipient); 
+	   setUserIdRecipient_ (userIdRecipient);
+       if (setRelationship) this.userIdSender = new User();
+       if (setRelationship) this.userIdSender.setUserId(userIdSender); 
+	   setUserIdSender_ (userIdSender);
     }
 
 	public MailAddress flat() {
@@ -376,6 +375,22 @@ public class MailAddress implements Serializable {
 //MP-MANAGED-UPDATABLE-ENDING
 
 
+    public MailBatch getMailBatchId () {
+    	return mailBatchId;
+    }
+	
+    public void setMailBatchId (MailBatch mailBatchId) {
+    	this.mailBatchId = mailBatchId;
+    }
+
+    public Integer getMailBatchId_() {
+        return mailBatchId_;
+    }
+	
+    public void setMailBatchId_ (Integer mailBatchId) {
+        this.mailBatchId_ =  mailBatchId;
+    }
+	
     public MailContent getMailContentId () {
     	return mailContentId;
     }
@@ -390,22 +405,6 @@ public class MailAddress implements Serializable {
 	
     public void setMailContentId_ (Integer mailContentId) {
         this.mailContentId_ =  mailContentId;
-    }
-	
-    public User getUserIdSender () {
-    	return userIdSender;
-    }
-	
-    public void setUserIdSender (User userIdSender) {
-    	this.userIdSender = userIdSender;
-    }
-
-    public Integer getUserIdSender_() {
-        return userIdSender_;
-    }
-	
-    public void setUserIdSender_ (Integer userIdSender) {
-        this.userIdSender_ =  userIdSender;
     }
 	
     public User getUserIdRecipient () {
@@ -424,20 +423,20 @@ public class MailAddress implements Serializable {
         this.userIdRecipient_ =  userIdRecipient;
     }
 	
-    public MailBatch getMailBatchId () {
-    	return mailBatchId;
+    public User getUserIdSender () {
+    	return userIdSender;
     }
 	
-    public void setMailBatchId (MailBatch mailBatchId) {
-    	this.mailBatchId = mailBatchId;
+    public void setUserIdSender (User userIdSender) {
+    	this.userIdSender = userIdSender;
     }
 
-    public Integer getMailBatchId_() {
-        return mailBatchId_;
+    public Integer getUserIdSender_() {
+        return userIdSender_;
     }
 	
-    public void setMailBatchId_ (Integer mailBatchId) {
-        this.mailBatchId_ =  mailBatchId;
+    public void setUserIdSender_ (Integer userIdSender) {
+        this.userIdSender_ =  userIdSender;
     }
 	
 

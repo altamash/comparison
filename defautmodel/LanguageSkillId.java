@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2EmbeddedId
 	* - file name : DomainEntityJPA2EmbeddedId.vm
-	* - time      : 2015/08/04 AD at 17:45:44 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -86,7 +85,7 @@ public class LanguageSkillId implements Serializable {
     @Override
     public String toString() {
         return "LanguageSkillId:" 
-        + ":" + iso6392t
+        + ":" + userId
         ;
     }
     

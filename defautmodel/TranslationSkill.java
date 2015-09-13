@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:43 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -40,8 +39,8 @@ import java.util.HashSet;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import defaultroot.defautmodel.domain.defautmodel.User;
 import defaultroot.defautmodel.domain.defautmodel.Translation;
+import defaultroot.defautmodel.domain.defautmodel.User;
 import defaultroot.defautmodel.domain.defautmodel.TranslationSkillId;
 
 /**
@@ -96,21 +95,21 @@ public class TranslationSkill implements Serializable {
     private Boolean isSupervisor; 
 //MP-MANAGED-UPDATABLE-ENDING
 
-    @MapsId ("user_id")
-    @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="user_id", referencedColumnName = "user_id" , nullable=false , unique=false , insertable=true, updatable=true) 
-    private User userId;  
-
-    @Column(name="user_id"  , nullable=false , unique=true, insertable=false, updatable=false)
-    private Integer userId_;
-
     @MapsId ("translation_id")
     @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="translation_id", referencedColumnName = "translation_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
+    @JoinColumn(name="translation_id", referencedColumnName = "translation_id" , nullable=false , unique=false , insertable=true, updatable=true) 
     private Translation translationId;  
 
     @Column(name="translation_id"  , nullable=false , unique=true, insertable=false, updatable=false)
     private Integer translationId_;
+
+    @MapsId ("user_id")
+    @ManyToOne (fetch=FetchType.LAZY , optional=false)
+    @JoinColumn(name="user_id", referencedColumnName = "user_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
+    private User userId;  
+
+    @Column(name="user_id"  , nullable=false , unique=true, insertable=false, updatable=false)
+    private Integer userId_;
 
     /**
     * Default constructor
@@ -150,12 +149,12 @@ public class TranslationSkill implements Serializable {
        setScriptAmount (scriptAmount);
        setIsSupervisor (isSupervisor);
        //parents
-       if (setRelationship) this.userId = new User();
-       if (setRelationship) this.userId.setUserId(userId); 
-	   setUserId_ (userId);
        if (setRelationship) this.translationId = new Translation();
        if (setRelationship) this.translationId.setTranslationId(translationId); 
 	   setTranslationId_ (translationId);
+       if (setRelationship) this.userId = new User();
+       if (setRelationship) this.userId.setUserId(userId); 
+	   setUserId_ (userId);
     }
 
 	public TranslationSkill flat() {
@@ -212,22 +211,6 @@ public class TranslationSkill implements Serializable {
 //MP-MANAGED-UPDATABLE-ENDING
 
 
-    public User getUserId () {
-    	return userId;
-    }
-	
-    public void setUserId (User userId) {
-    	this.userId = userId;
-    }
-
-    public Integer getUserId_() {
-        return userId_;
-    }
-	
-    public void setUserId_ (Integer userId) {
-        this.userId_ =  userId;
-    }
-	
     public Translation getTranslationId () {
     	return translationId;
     }
@@ -242,6 +225,22 @@ public class TranslationSkill implements Serializable {
 	
     public void setTranslationId_ (Integer translationId) {
         this.translationId_ =  translationId;
+    }
+	
+    public User getUserId () {
+    	return userId;
+    }
+	
+    public void setUserId (User userId) {
+    	this.userId = userId;
+    }
+
+    public Integer getUserId_() {
+        return userId_;
+    }
+	
+    public void setUserId_ (Integer userId) {
+        this.userId_ =  userId;
     }
 	
 

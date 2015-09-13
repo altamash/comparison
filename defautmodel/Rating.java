@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:43 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -82,6 +81,11 @@ public class Rating implements Serializable {
     private Set <Price> priceRatingViaRatingId = new HashSet<Price>(); 
 
 //MP-MANAGED-UPDATABLE-ENDING
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptRatingViaRatingIdClient-field-rating@
+    @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Script.class, fetch=FetchType.LAZY, mappedBy="ratingIdClient", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
+    private Set <Script> scriptRatingViaRatingIdClient = new HashSet<Script>(); 
+
+//MP-MANAGED-UPDATABLE-ENDING
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptRatingViaRatingIdRequest-field-rating@
     @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Script.class, fetch=FetchType.LAZY, mappedBy="ratingIdRequest", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
     private Set <Script> scriptRatingViaRatingIdRequest = new HashSet<Script>(); 
@@ -90,11 +94,6 @@ public class Rating implements Serializable {
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptRatingViaRatingIdScriptor-field-rating@
     @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Script.class, fetch=FetchType.LAZY, mappedBy="ratingIdScriptor", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
     private Set <Script> scriptRatingViaRatingIdScriptor = new HashSet<Script>(); 
-
-//MP-MANAGED-UPDATABLE-ENDING
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptRatingViaRatingIdClient-field-rating@
-    @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Script.class, fetch=FetchType.LAZY, mappedBy="ratingIdClient", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
-    private Set <Script> scriptRatingViaRatingIdClient = new HashSet<Script>(); 
 
 //MP-MANAGED-UPDATABLE-ENDING
     /**
@@ -172,6 +171,23 @@ public class Rating implements Serializable {
     }
     
 //MP-MANAGED-UPDATABLE-ENDING
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptRatingViaRatingIdClient-getter-rating@
+    public Set<Script> getScriptRatingViaRatingIdClient() {
+        if (scriptRatingViaRatingIdClient == null){
+            scriptRatingViaRatingIdClient = new HashSet<Script>();
+        }
+        return scriptRatingViaRatingIdClient;
+    }
+
+    public void setScriptRatingViaRatingIdClient (Set<Script> scriptRatingViaRatingIdClient) {
+        this.scriptRatingViaRatingIdClient = scriptRatingViaRatingIdClient;
+    }	
+    
+    public void addScriptRatingViaRatingIdClient (Script element) {
+    	    getScriptRatingViaRatingIdClient().add(element);
+    }
+    
+//MP-MANAGED-UPDATABLE-ENDING
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptRatingViaRatingIdRequest-getter-rating@
     public Set<Script> getScriptRatingViaRatingIdRequest() {
         if (scriptRatingViaRatingIdRequest == null){
@@ -203,23 +219,6 @@ public class Rating implements Serializable {
     
     public void addScriptRatingViaRatingIdScriptor (Script element) {
     	    getScriptRatingViaRatingIdScriptor().add(element);
-    }
-    
-//MP-MANAGED-UPDATABLE-ENDING
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptRatingViaRatingIdClient-getter-rating@
-    public Set<Script> getScriptRatingViaRatingIdClient() {
-        if (scriptRatingViaRatingIdClient == null){
-            scriptRatingViaRatingIdClient = new HashSet<Script>();
-        }
-        return scriptRatingViaRatingIdClient;
-    }
-
-    public void setScriptRatingViaRatingIdClient (Set<Script> scriptRatingViaRatingIdClient) {
-        this.scriptRatingViaRatingIdClient = scriptRatingViaRatingIdClient;
-    }	
-    
-    public void addScriptRatingViaRatingIdClient (Script element) {
-    	    getScriptRatingViaRatingIdClient().add(element);
     }
     
 //MP-MANAGED-UPDATABLE-ENDING

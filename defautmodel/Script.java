@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:43 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -41,15 +40,15 @@ import java.util.HashSet;
 import java.io.Serializable;
 import javax.persistence.*;
 import defaultroot.defautmodel.domain.defautmodel.User;
-import defaultroot.defautmodel.domain.defautmodel.User;
 import defaultroot.defautmodel.domain.defautmodel.Language;
-import defaultroot.defautmodel.domain.defautmodel.Translation;
-import defaultroot.defautmodel.domain.defautmodel.Rating;
-import defaultroot.defautmodel.domain.defautmodel.Rating;
 import defaultroot.defautmodel.domain.defautmodel.Price;
-import defaultroot.defautmodel.domain.defautmodel.ScriptType;
-import defaultroot.defautmodel.domain.defautmodel.ScriptStatus;
 import defaultroot.defautmodel.domain.defautmodel.Rating;
+import defaultroot.defautmodel.domain.defautmodel.Rating;
+import defaultroot.defautmodel.domain.defautmodel.Rating;
+import defaultroot.defautmodel.domain.defautmodel.ScriptStatus;
+import defaultroot.defautmodel.domain.defautmodel.ScriptType;
+import defaultroot.defautmodel.domain.defautmodel.User;
+import defaultroot.defautmodel.domain.defautmodel.Translation;
 import defaultroot.defautmodel.domain.defautmodel.Competence;
 
 /**
@@ -128,13 +127,6 @@ public class Script implements Serializable {
     private Integer clientId_;
 
     @ManyToOne (fetch=FetchType.LAZY )
-    @JoinColumn(name="scriptor_id", referencedColumnName = "user_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
-    private User scriptorId;  
-
-    @Column(name="scriptor_id"  , nullable=true , unique=true, insertable=false, updatable=false)
-    private Integer scriptorId_;
-
-    @ManyToOne (fetch=FetchType.LAZY )
     @JoinColumn(name="iso6392t", referencedColumnName = "iso6392t" , nullable=true , unique=true  , insertable=true, updatable=true) 
     private Language iso6392t;  
 
@@ -142,11 +134,18 @@ public class Script implements Serializable {
     private String iso6392t_;
 
     @ManyToOne (fetch=FetchType.LAZY )
-    @JoinColumn(name="translation_id", referencedColumnName = "translation_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
-    private Translation translationId;  
+    @JoinColumn(name="price_id", referencedColumnName = "price_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
+    private Price priceId;  
 
-    @Column(name="translation_id"  , nullable=true , unique=true, insertable=false, updatable=false)
-    private Integer translationId_;
+    @Column(name="price_id"  , nullable=true , unique=true, insertable=false, updatable=false)
+    private Integer priceId_;
+
+    @ManyToOne (fetch=FetchType.LAZY , optional=false)
+    @JoinColumn(name="rating_id_client", referencedColumnName = "rating_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
+    private Rating ratingIdClient;  
+
+    @Column(name="rating_id_client"  , nullable=false , unique=true, insertable=false, updatable=false)
+    private Integer ratingIdClient_;
 
     @ManyToOne (fetch=FetchType.LAZY , optional=false)
     @JoinColumn(name="rating_id_request", referencedColumnName = "rating_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
@@ -162,20 +161,6 @@ public class Script implements Serializable {
     @Column(name="rating_id_scriptor"  , nullable=false , unique=true, insertable=false, updatable=false)
     private Integer ratingIdScriptor_;
 
-    @ManyToOne (fetch=FetchType.LAZY )
-    @JoinColumn(name="price_id", referencedColumnName = "price_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
-    private Price priceId;  
-
-    @Column(name="price_id"  , nullable=true , unique=true, insertable=false, updatable=false)
-    private Integer priceId_;
-
-    @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="script_type_id", referencedColumnName = "script_type_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
-    private ScriptType scriptTypeId;  
-
-    @Column(name="script_type_id"  , nullable=false , unique=true, insertable=false, updatable=false)
-    private Integer scriptTypeId_;
-
     @ManyToOne (fetch=FetchType.LAZY , optional=false)
     @JoinColumn(name="script_status_id", referencedColumnName = "script_status_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
     private ScriptStatus scriptStatusId;  
@@ -184,11 +169,25 @@ public class Script implements Serializable {
     private Integer scriptStatusId_;
 
     @ManyToOne (fetch=FetchType.LAZY , optional=false)
-    @JoinColumn(name="rating_id_client", referencedColumnName = "rating_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
-    private Rating ratingIdClient;  
+    @JoinColumn(name="script_type_id", referencedColumnName = "script_type_id" , nullable=false , unique=true  , insertable=true, updatable=true) 
+    private ScriptType scriptTypeId;  
 
-    @Column(name="rating_id_client"  , nullable=false , unique=true, insertable=false, updatable=false)
-    private Integer ratingIdClient_;
+    @Column(name="script_type_id"  , nullable=false , unique=true, insertable=false, updatable=false)
+    private Integer scriptTypeId_;
+
+    @ManyToOne (fetch=FetchType.LAZY )
+    @JoinColumn(name="scriptor_id", referencedColumnName = "user_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
+    private User scriptorId;  
+
+    @Column(name="scriptor_id"  , nullable=true , unique=true, insertable=false, updatable=false)
+    private Integer scriptorId_;
+
+    @ManyToOne (fetch=FetchType.LAZY )
+    @JoinColumn(name="translation_id", referencedColumnName = "translation_id" , nullable=true , unique=true  , insertable=true, updatable=true) 
+    private Translation translationId;  
+
+    @Column(name="translation_id"  , nullable=true , unique=true, insertable=false, updatable=false)
+    private Integer translationId_;
 
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @m2m-competenceViaScriptCompetenceByCompetenceId-script@
     @ManyToMany
@@ -271,33 +270,33 @@ public class Script implements Serializable {
        if (setRelationship) this.clientId = new User();
        if (setRelationship) this.clientId.setUserId(clientId); 
 	   setClientId_ (clientId);
-       if (setRelationship) this.scriptorId = new User();
-       if (setRelationship) this.scriptorId.setUserId(scriptorId); 
-	   setScriptorId_ (scriptorId);
        if (setRelationship) this.iso6392t = new Language();
        if (setRelationship) this.iso6392t.setIso6392t(iso6392t); 
 	   setIso6392t_ (iso6392t);
-       if (setRelationship) this.translationId = new Translation();
-       if (setRelationship) this.translationId.setTranslationId(translationId); 
-	   setTranslationId_ (translationId);
+       if (setRelationship) this.priceId = new Price();
+       if (setRelationship) this.priceId.setPriceId(priceId); 
+	   setPriceId_ (priceId);
+       if (setRelationship) this.ratingIdClient = new Rating();
+       if (setRelationship) this.ratingIdClient.setRatingId(ratingIdClient); 
+	   setRatingIdClient_ (ratingIdClient);
        if (setRelationship) this.ratingIdRequest = new Rating();
        if (setRelationship) this.ratingIdRequest.setRatingId(ratingIdRequest); 
 	   setRatingIdRequest_ (ratingIdRequest);
        if (setRelationship) this.ratingIdScriptor = new Rating();
        if (setRelationship) this.ratingIdScriptor.setRatingId(ratingIdScriptor); 
 	   setRatingIdScriptor_ (ratingIdScriptor);
-       if (setRelationship) this.priceId = new Price();
-       if (setRelationship) this.priceId.setPriceId(priceId); 
-	   setPriceId_ (priceId);
-       if (setRelationship) this.scriptTypeId = new ScriptType();
-       if (setRelationship) this.scriptTypeId.setScriptTypeId(scriptTypeId); 
-	   setScriptTypeId_ (scriptTypeId);
        if (setRelationship) this.scriptStatusId = new ScriptStatus();
        if (setRelationship) this.scriptStatusId.setScriptStatusId(scriptStatusId); 
 	   setScriptStatusId_ (scriptStatusId);
-       if (setRelationship) this.ratingIdClient = new Rating();
-       if (setRelationship) this.ratingIdClient.setRatingId(ratingIdClient); 
-	   setRatingIdClient_ (ratingIdClient);
+       if (setRelationship) this.scriptTypeId = new ScriptType();
+       if (setRelationship) this.scriptTypeId.setScriptTypeId(scriptTypeId); 
+	   setScriptTypeId_ (scriptTypeId);
+       if (setRelationship) this.scriptorId = new User();
+       if (setRelationship) this.scriptorId.setUserId(scriptorId); 
+	   setScriptorId_ (scriptorId);
+       if (setRelationship) this.translationId = new Translation();
+       if (setRelationship) this.translationId.setTranslationId(translationId); 
+	   setTranslationId_ (translationId);
     }
 
 	public Script flat() {
@@ -390,22 +389,6 @@ public class Script implements Serializable {
         this.clientId_ =  clientId;
     }
 	
-    public User getScriptorId () {
-    	return scriptorId;
-    }
-	
-    public void setScriptorId (User scriptorId) {
-    	this.scriptorId = scriptorId;
-    }
-
-    public Integer getScriptorId_() {
-        return scriptorId_;
-    }
-	
-    public void setScriptorId_ (Integer scriptorId) {
-        this.scriptorId_ =  scriptorId;
-    }
-	
     public Language getIso6392t () {
     	return iso6392t;
     }
@@ -422,20 +405,36 @@ public class Script implements Serializable {
         this.iso6392t_ =  iso6392t;
     }
 	
-    public Translation getTranslationId () {
-    	return translationId;
+    public Price getPriceId () {
+    	return priceId;
     }
 	
-    public void setTranslationId (Translation translationId) {
-    	this.translationId = translationId;
+    public void setPriceId (Price priceId) {
+    	this.priceId = priceId;
     }
 
-    public Integer getTranslationId_() {
-        return translationId_;
+    public Integer getPriceId_() {
+        return priceId_;
     }
 	
-    public void setTranslationId_ (Integer translationId) {
-        this.translationId_ =  translationId;
+    public void setPriceId_ (Integer priceId) {
+        this.priceId_ =  priceId;
+    }
+	
+    public Rating getRatingIdClient () {
+    	return ratingIdClient;
+    }
+	
+    public void setRatingIdClient (Rating ratingIdClient) {
+    	this.ratingIdClient = ratingIdClient;
+    }
+
+    public Integer getRatingIdClient_() {
+        return ratingIdClient_;
+    }
+	
+    public void setRatingIdClient_ (Integer ratingIdClient) {
+        this.ratingIdClient_ =  ratingIdClient;
     }
 	
     public Rating getRatingIdRequest () {
@@ -470,20 +469,20 @@ public class Script implements Serializable {
         this.ratingIdScriptor_ =  ratingIdScriptor;
     }
 	
-    public Price getPriceId () {
-    	return priceId;
+    public ScriptStatus getScriptStatusId () {
+    	return scriptStatusId;
     }
 	
-    public void setPriceId (Price priceId) {
-    	this.priceId = priceId;
+    public void setScriptStatusId (ScriptStatus scriptStatusId) {
+    	this.scriptStatusId = scriptStatusId;
     }
 
-    public Integer getPriceId_() {
-        return priceId_;
+    public Integer getScriptStatusId_() {
+        return scriptStatusId_;
     }
 	
-    public void setPriceId_ (Integer priceId) {
-        this.priceId_ =  priceId;
+    public void setScriptStatusId_ (Integer scriptStatusId) {
+        this.scriptStatusId_ =  scriptStatusId;
     }
 	
     public ScriptType getScriptTypeId () {
@@ -502,36 +501,36 @@ public class Script implements Serializable {
         this.scriptTypeId_ =  scriptTypeId;
     }
 	
-    public ScriptStatus getScriptStatusId () {
-    	return scriptStatusId;
+    public User getScriptorId () {
+    	return scriptorId;
     }
 	
-    public void setScriptStatusId (ScriptStatus scriptStatusId) {
-    	this.scriptStatusId = scriptStatusId;
+    public void setScriptorId (User scriptorId) {
+    	this.scriptorId = scriptorId;
     }
 
-    public Integer getScriptStatusId_() {
-        return scriptStatusId_;
+    public Integer getScriptorId_() {
+        return scriptorId_;
     }
 	
-    public void setScriptStatusId_ (Integer scriptStatusId) {
-        this.scriptStatusId_ =  scriptStatusId;
+    public void setScriptorId_ (Integer scriptorId) {
+        this.scriptorId_ =  scriptorId;
     }
 	
-    public Rating getRatingIdClient () {
-    	return ratingIdClient;
+    public Translation getTranslationId () {
+    	return translationId;
     }
 	
-    public void setRatingIdClient (Rating ratingIdClient) {
-    	this.ratingIdClient = ratingIdClient;
+    public void setTranslationId (Translation translationId) {
+    	this.translationId = translationId;
     }
 
-    public Integer getRatingIdClient_() {
-        return ratingIdClient_;
+    public Integer getTranslationId_() {
+        return translationId_;
     }
 	
-    public void setRatingIdClient_ (Integer ratingIdClient) {
-        this.ratingIdClient_ =  ratingIdClient;
+    public void setTranslationId_ (Integer translationId) {
+        this.translationId_ =  translationId;
     }
 	
 

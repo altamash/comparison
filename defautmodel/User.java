@@ -25,7 +25,6 @@
 	* - Minuteproject version : 0.9
 	* - name      : DomainEntityJPA2Annotation
 	* - file name : DomainEntityJPA2Annotation.vm
-	* - time      : 2015/08/04 AD at 17:45:43 PKT
 */
 package defaultroot.defautmodel.domain.defautmodel;
 
@@ -43,7 +42,6 @@ import javax.persistence.*;
 import defaultroot.defautmodel.domain.defautmodel.LanguageSkill;
 import defaultroot.defautmodel.domain.defautmodel.MailAddress;
 import defaultroot.defautmodel.domain.defautmodel.MailAddress;
-import defaultroot.defautmodel.domain.defautmodel.Revinfo;
 import defaultroot.defautmodel.domain.defautmodel.Script;
 import defaultroot.defautmodel.domain.defautmodel.Script;
 import defaultroot.defautmodel.domain.defautmodel.TranslationSkill;
@@ -295,19 +293,14 @@ public class User implements Serializable {
     private Set <LanguageSkill> languageSkillUserViaUserId = new HashSet<LanguageSkill>(); 
 
 //MP-MANAGED-UPDATABLE-ENDING
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @mailAddressUserViaUserIdSender-field-user@
-    @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.MailAddress.class, fetch=FetchType.LAZY, mappedBy="userIdSender", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
-    private Set <MailAddress> mailAddressUserViaUserIdSender = new HashSet<MailAddress>(); 
-
-//MP-MANAGED-UPDATABLE-ENDING
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @mailAddressUserViaUserIdRecipient-field-user@
     @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.MailAddress.class, fetch=FetchType.LAZY, mappedBy="userIdRecipient", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
     private Set <MailAddress> mailAddressUserViaUserIdRecipient = new HashSet<MailAddress>(); 
 
 //MP-MANAGED-UPDATABLE-ENDING
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @revinfoUserViaUserId-field-user@
-    @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Revinfo.class, fetch=FetchType.LAZY, mappedBy="userId", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
-    private Set <Revinfo> revinfoUserViaUserId = new HashSet<Revinfo>(); 
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @mailAddressUserViaUserIdSender-field-user@
+    @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.MailAddress.class, fetch=FetchType.LAZY, mappedBy="userIdSender", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
+    private Set <MailAddress> mailAddressUserViaUserIdSender = new HashSet<MailAddress>(); 
 
 //MP-MANAGED-UPDATABLE-ENDING
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @scriptUserViaClientId-field-user@
@@ -743,23 +736,6 @@ public class User implements Serializable {
     }
     
 //MP-MANAGED-UPDATABLE-ENDING
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @mailAddressUserViaUserIdSender-getter-user@
-    public Set<MailAddress> getMailAddressUserViaUserIdSender() {
-        if (mailAddressUserViaUserIdSender == null){
-            mailAddressUserViaUserIdSender = new HashSet<MailAddress>();
-        }
-        return mailAddressUserViaUserIdSender;
-    }
-
-    public void setMailAddressUserViaUserIdSender (Set<MailAddress> mailAddressUserViaUserIdSender) {
-        this.mailAddressUserViaUserIdSender = mailAddressUserViaUserIdSender;
-    }	
-    
-    public void addMailAddressUserViaUserIdSender (MailAddress element) {
-    	    getMailAddressUserViaUserIdSender().add(element);
-    }
-    
-//MP-MANAGED-UPDATABLE-ENDING
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @mailAddressUserViaUserIdRecipient-getter-user@
     public Set<MailAddress> getMailAddressUserViaUserIdRecipient() {
         if (mailAddressUserViaUserIdRecipient == null){
@@ -777,20 +753,20 @@ public class User implements Serializable {
     }
     
 //MP-MANAGED-UPDATABLE-ENDING
-//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @revinfoUserViaUserId-getter-user@
-    public Set<Revinfo> getRevinfoUserViaUserId() {
-        if (revinfoUserViaUserId == null){
-            revinfoUserViaUserId = new HashSet<Revinfo>();
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @mailAddressUserViaUserIdSender-getter-user@
+    public Set<MailAddress> getMailAddressUserViaUserIdSender() {
+        if (mailAddressUserViaUserIdSender == null){
+            mailAddressUserViaUserIdSender = new HashSet<MailAddress>();
         }
-        return revinfoUserViaUserId;
+        return mailAddressUserViaUserIdSender;
     }
 
-    public void setRevinfoUserViaUserId (Set<Revinfo> revinfoUserViaUserId) {
-        this.revinfoUserViaUserId = revinfoUserViaUserId;
+    public void setMailAddressUserViaUserIdSender (Set<MailAddress> mailAddressUserViaUserIdSender) {
+        this.mailAddressUserViaUserIdSender = mailAddressUserViaUserIdSender;
     }	
     
-    public void addRevinfoUserViaUserId (Revinfo element) {
-    	    getRevinfoUserViaUserId().add(element);
+    public void addMailAddressUserViaUserIdSender (MailAddress element) {
+    	    getMailAddressUserViaUserIdSender().add(element);
     }
     
 //MP-MANAGED-UPDATABLE-ENDING
