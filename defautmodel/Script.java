@@ -176,7 +176,7 @@ public class Script implements Serializable {
 //MP-MANAGED-ADDED-AREA-BEGINNING @script_result-field-annotation@
 //MP-MANAGED-ADDED-AREA-ENDING @script_result-field-annotation@
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @ATTRIBUTE-script_result@
-    @Column(name="script_result"   , nullable=false , unique=false)
+    @Column(name="script_result"   , nullable=true , unique=false)
     @Lob @Basic(fetch=FetchType.LAZY) 
     private String scriptResult; 
 //MP-MANAGED-UPDATABLE-ENDING

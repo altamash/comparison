@@ -39,6 +39,8 @@ import java.util.HashSet;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import defaultroot.defautmodel.domain.defautmodel.Job;
+import defaultroot.defautmodel.domain.defautmodel.Job;
 import defaultroot.defautmodel.domain.defautmodel.LanguageSkill;
 import defaultroot.defautmodel.domain.defautmodel.MailAddress;
 import defaultroot.defautmodel.domain.defautmodel.MailAddress;
@@ -288,6 +290,16 @@ public class User implements Serializable {
     @Column(name="app_source_key" , length=36 , nullable=false , unique=true, insertable=false, updatable=false)
     private String appSourceKey_;
 
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @jobUserViaCreatedBy-field-user@
+    @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Job.class, fetch=FetchType.LAZY, mappedBy="createdBy", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
+    private Set <Job> jobUserViaCreatedBy = new HashSet<Job>(); 
+
+//MP-MANAGED-UPDATABLE-ENDING
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @jobUserViaModifiedBy-field-user@
+    @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.Job.class, fetch=FetchType.LAZY, mappedBy="modifiedBy", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
+    private Set <Job> jobUserViaModifiedBy = new HashSet<Job>(); 
+
+//MP-MANAGED-UPDATABLE-ENDING
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @languageSkillUserViaUserId-field-user@
     @OneToMany (targetEntity=defaultroot.defautmodel.domain.defautmodel.LanguageSkill.class, fetch=FetchType.LAZY, mappedBy="userId", cascade=CascadeType.REMOVE)//, cascade=CascadeType.ALL)
     private Set <LanguageSkill> languageSkillUserViaUserId = new HashSet<LanguageSkill>(); 
@@ -719,6 +731,40 @@ public class User implements Serializable {
     }
 	
 
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @jobUserViaCreatedBy-getter-user@
+    public Set<Job> getJobUserViaCreatedBy() {
+        if (jobUserViaCreatedBy == null){
+            jobUserViaCreatedBy = new HashSet<Job>();
+        }
+        return jobUserViaCreatedBy;
+    }
+
+    public void setJobUserViaCreatedBy (Set<Job> jobUserViaCreatedBy) {
+        this.jobUserViaCreatedBy = jobUserViaCreatedBy;
+    }	
+    
+    public void addJobUserViaCreatedBy (Job element) {
+    	    getJobUserViaCreatedBy().add(element);
+    }
+    
+//MP-MANAGED-UPDATABLE-ENDING
+//MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @jobUserViaModifiedBy-getter-user@
+    public Set<Job> getJobUserViaModifiedBy() {
+        if (jobUserViaModifiedBy == null){
+            jobUserViaModifiedBy = new HashSet<Job>();
+        }
+        return jobUserViaModifiedBy;
+    }
+
+    public void setJobUserViaModifiedBy (Set<Job> jobUserViaModifiedBy) {
+        this.jobUserViaModifiedBy = jobUserViaModifiedBy;
+    }	
+    
+    public void addJobUserViaModifiedBy (Job element) {
+    	    getJobUserViaModifiedBy().add(element);
+    }
+    
+//MP-MANAGED-UPDATABLE-ENDING
 //MP-MANAGED-UPDATABLE-BEGINNING-DISABLE @languageSkillUserViaUserId-getter-user@
     public Set<LanguageSkill> getLanguageSkillUserViaUserId() {
         if (languageSkillUserViaUserId == null){
